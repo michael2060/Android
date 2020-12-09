@@ -4,4 +4,8 @@
     <string name="button2">ボタン2</string>
     <!-- LinearLayoutActivity -->
     <string name="linear_layout_label">LINEAR LAYOUT</string>
+    <!-- ConstraintLayoutActivity -->
+    <string name="Constraint_layout_label">宿題</string>
+    <string name="constraint_button_send">SEND</string>
+    <string name="constraint_textviiew_msg">テキストを入力</string>
 </resources>

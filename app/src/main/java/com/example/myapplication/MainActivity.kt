@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         val button1: Button = findViewById(R.id.button)
         button1.setOnClickListener {
             Timber.d("onclick")
-            startActivity(Intent(this, LinearActiviy::class.java))
+            startActivity(Intent(this, Constraint_Activity::class.java))
         }
     }
 }
