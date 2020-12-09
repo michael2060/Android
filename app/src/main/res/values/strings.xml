@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="button1">ボタン1</string>
+    <string name="button2">ボタン2</string>
 </resources>
