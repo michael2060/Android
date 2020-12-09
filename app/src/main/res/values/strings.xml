@@ -2,4 +2,6 @@
     <string name="app_name">My Application</string>
     <string name="button1">ボタン1</string>
     <string name="button2">ボタン2</string>
+    <!-- LinearLayoutActivity -->
+    <string name="linear_layout_label">LINEAR LAYOUT</string>
 </resources>
