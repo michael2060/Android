@@ -7,27 +7,27 @@
     tools:context=".Constraint_Activity">
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/imbPicTUR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName2"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:drawable/ic_menu_gallery" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/imbEdiTTT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton"
-        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:layout_constraintBottom_toBottomOf="@+id/imbPicTUR"
+        app:layout_constraintStart_toEndOf="@+id/imbPicTUR"
         app:srcCompat="@android:drawable/ic_menu_edit" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/imbAddBTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
-        app:layout_constraintStart_toEndOf="@+id/imageButton2"
+        app:layout_constraintBottom_toBottomOf="@+id/imbEdiTTT"
+        app:layout_constraintStart_toEndOf="@+id/imbEdiTTT"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
     <EditText
@@ -43,10 +43,19 @@
     <Button
         android:id="@+id/button7"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:text="@string/constraint_button_send"
         app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName2"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    <txv
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/constraint_textviiew_msg"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName2"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
