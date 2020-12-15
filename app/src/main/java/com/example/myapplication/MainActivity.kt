@@ -12,9 +12,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Timber.d("onCreate")
         val button1: Button = findViewById(R.id.button)
+        val button2: Button = findViewById(R.id.button2)
         button1.setOnClickListener {
             Timber.d("onclick")
             startActivity(Intent(this, Constraint_Activity::class.java))
+        }
+        button2.setOnClickListener {
+            Timber.d("onclick2")
+            startActivity(Intent(this, LinearActiviy::class.java))
         }
     }
 }

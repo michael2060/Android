@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:background="@null"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton"
+        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:layout_constraintTop_toTopOf="@+id/imageButton"
+        app:srcCompat="@drawable/gallery_img" />
+
+    <TextView
+        android:id="@+id/textpicnum"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="1,000"
+        android:textAlignment="center"
+        android:textSize="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/textpic"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textpic"
+        app:layout_constraintTop_toBottomOf="@id/textpic1" />
+
+    <TextView
+        android:id="@+id/textpic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="画像"
+        android:textAlignment="center"
+        android:textSize="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageButton"
+        app:layout_constraintTop_toBottomOf="@id/imageButton" />
+
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:autofillHints="@string/Search_msg1"
+        android:iconifiedByDefault="false"
+        android:queryHint="@string/Search_msg1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@null"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="@+id/searchView"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:srcCompat="@drawable/gallery_img" />
+
+    <TextView
+        android:id="@+id/textpic1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="画像"
+        android:textAlignment="center"
+        android:textSize="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageButton2"
+        app:layout_constraintTop_toTopOf="@+id/textpic" />
+
+    <TextView
+        android:id="@+id/textpic2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="画像"
+        android:textAlignment="center"
+        android:textSize="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageButton3"
+        app:layout_constraintTop_toTopOf="@+id/textpic" />
+
+    <TextView
+        android:id="@+id/textpic3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="画像"
+        android:textAlignment="center"
+        android:textSize="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageButton3"
+        app:layout_constraintTop_toTopOf="@+id/textpicnum" />
+
+    <TextView
+        android:id="@+id/textpicnum1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="1,000"
+        android:textAlignment="center"
+        android:textSize="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/textpic1"
+        app:layout_constraintStart_toStartOf="@+id/textpic1"
+        app:layout_constraintTop_toTopOf="@+id/textpicnum" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="85dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
+        app:layout_constraintStart_toEndOf="@+id/imageButton2"
+        app:layout_constraintTop_toTopOf="@+id/imageButton2"
+        app:srcCompat="@drawable/gallery_img" />
+
+    <ImageButton
+        android:id="@+id/imageButton5"
+        android:layout_width="85dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton3"
+        app:layout_constraintStart_toEndOf="@+id/imageButton3"
+        app:layout_constraintTop_toTopOf="@+id/imageButton3"
+        app:srcCompat="@drawable/gallery_img" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
