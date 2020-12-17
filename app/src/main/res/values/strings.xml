@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="button1">ボタン1</string>
-    <string name="button2">ボタン2</string>
+    <string name="btnhomework">宿題1</string>
+    <string name="btnlinearlayout">LinearLayout</string>
     <string name="Search_msg1">検索</string>
 
     <!-- LinearLayoutActivity -->
