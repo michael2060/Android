@@ -22,17 +22,17 @@ class Constraint_Activity : AppCompatActivity() {
         adapter = SendInfoAdapter(this)
         ListViewSendInfo.adapter = adapter
         btnSend.setOnClickListener {
-            var date = Date()
-            var dateformat: DateFormat = DateFormat.getDateTimeInstance()
-            var now = dateformat.format(date)
-            Sendbtnclick("シュウ", now.toString(), EditTextMessage.text.toString())
+            val date = Date()
+            val dateformat: DateFormat = DateFormat.getDateTimeInstance()
+            val now = dateformat.format(date)
+            Sendbtnclick("シュウ", now, editTextMessage.text.toString())
         }
     }
 
     fun Sendbtnclick(name: String, datetime: String, message: String) {
         val info = Addsendinfo(name, datetime, message)
         adapter.add(info)
-        EditTextMessage.text = null
+        editTextMessage.text = null
 
     }
 
@@ -43,12 +43,9 @@ class Constraint_Activity : AppCompatActivity() {
 
             val item = getItem(position)
 
-
             view.Sendmsg.text = item?.SendMessage
             view.SendName.text = item?.name
             view.SendTimeDate.text = item?.dateTime
-
-
 
             return view
         }
