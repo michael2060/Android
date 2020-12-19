@@ -40,7 +40,7 @@
         app:srcCompat="@android:drawable/ic_menu_add" />
 
     <EditText
-        android:id="@+id/EditTextMessage"
+        android:id="@+id/editTextMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:text="@string/constraint_button_send"
-        app:layout_constraintBottom_toBottomOf="@+id/EditTextMessage"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView" />
 
@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/constraint_textviiew_msg"
-        app:layout_constraintBottom_toTopOf="@+id/EditTextMessage"
+        app:layout_constraintBottom_toTopOf="@+id/editTextMessage"
         app:layout_constraintStart_toStartOf="parent" />
 
 
