@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +21,9 @@ class MainActivity : AppCompatActivity() {
         linearLayout.setOnClickListener {
             Timber.d("onclick2")
             startActivity(Intent(this, LinearActiviy::class.java))
+        }
+        btnSpinner.setOnClickListener {
+            startActivity(Intent(this, SpinnerActivity::class.java))
         }
     }
 }
