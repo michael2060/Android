@@ -24,4 +24,30 @@
         app:layout_constraintTop_toBottomOf="@id/spinner"
         app:layout_constraintStart_toStartOf="@id/spinner"
         app:layout_constraintEnd_toEndOf="@id/spinner" />
+
+    <RadioGroup
+        android:id="@+id/spinnerRadio"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/btnspinnerclick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="119dp">
+
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_baseline_access_alarms_24"
+            android:text="RadioButton1" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_baseline_access_alarms_24"
+            android:text="RadioButton2" />
+    </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>
