@@ -2,6 +2,8 @@ package com.example.myapplication
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Layout
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +16,7 @@ import java.util.*
 
 class Constraint_Activity : AppCompatActivity() {
     private lateinit var adapter: SendInfoAdapter
-
+    private lateinit var Spinnerview: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +29,7 @@ class Constraint_Activity : AppCompatActivity() {
             val now = dateformat.format(date)
             Sendbtnclick("シュウ", now, editTextMessage.text.toString())
         }
+
     }
 
     fun Sendbtnclick(name: String, datetime: String, message: String) {
@@ -36,19 +39,27 @@ class Constraint_Activity : AppCompatActivity() {
 
     }
 
+
+
     private class SendInfoAdapter(context: Context) : ArrayAdapter<Addsendinfo>(context, R.layout.item_homework_sendinfo) {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val view = convertView
-                    ?: LayoutInflater.from(context).inflate(R.layout.item_homework_sendinfo, parent, false)
+            val view = convertView?: LayoutInflater.from(context).inflate(R.layout.item_homework_sendinfo, parent, false)
 
             val item = getItem(position)
 
             view.Sendmsg.text = item?.SendMessage
             view.SendName.text = item?.name
             view.SendTimeDate.text = item?.dateTime
+            val spinneritem = arrayOf("既読","未読")
+            view.sendspinner.adapter = ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,spinneritem)
+            view.sendspinner.setOnItemClickListener {
+                parent, view, position, id ->
+
+            }
 
             return view
         }
+
 
     }
 }
