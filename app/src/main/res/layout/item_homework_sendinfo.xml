@@ -48,4 +48,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_launcher_background" />
 
+    <Spinner
+        android:id="@+id/sendspinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/SendImg"
+        app:layout_constraintStart_toStartOf="@id/SendImg"
+        app:layout_constraintEnd_toEndOf="@id/SendTimeDate"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
