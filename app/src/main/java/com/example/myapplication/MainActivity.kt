@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, LinearActiviy::class.java))
         }
         btnSpinner.setOnClickListener {
-            startActivity(Intent(this, SpinnerActivity::class.java))
+            startActivity(Intent(this, RectyclerActivity::class.java))
         }
     }
 }

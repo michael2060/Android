@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_spinner.*
 import timber.log.Timber
 
@@ -55,6 +56,10 @@ class SpinnerActivity : AppCompatActivity() {
 
         btnspinnerclick.setOnClickListener {
             Sendspinnermsg()
+            val snackbar = Snackbar.make(btnspinnerclick, "クリックされました", Snackbar.LENGTH_SHORT)
+            snackbar.setAction("OK") {
+                Timber.d("OK")
+            }.show()
         }
     }
 
