@@ -10,4 +10,6 @@
     <string name="Constraint_layout_label">宿題</string>
     <string name="constraint_button_send">SEND</string>
     <string name="constraint_textviiew_msg">テキストを入力</string>
+    <string name="send_radio_pc">PC</string>
+    <string name="send_radio_android">PHONE</string>
 </resources>

@@ -11,33 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/imbPicTUR"
+        app:layout_constraintBottom_toTopOf="@id/spinnersend"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <ImageButton
-        android:id="@+id/imbPicTUR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+    </ListView>
 
-    <ImageButton
-        android:id="@+id/imbEdiTTT"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/spinnersend"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/imbPicTUR"
-        app:layout_constraintStart_toEndOf="@+id/imbPicTUR"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
-
-    <ImageButton
-        android:id="@+id/imbAddBTN"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/imbEdiTTT"
-        app:layout_constraintStart_toEndOf="@+id/imbEdiTTT"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        app:layout_constraintBottom_toTopOf="@+id/sendRadioGroup"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/editTextMessage"
@@ -47,7 +32,8 @@
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnSend"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/btnSend"
@@ -56,15 +42,30 @@
         android:text="@string/constraint_button_send"
         app:layout_constraintBottom_toBottomOf="@+id/editTextMessage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="@+id/editTextMessage" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textView"
+    <RadioGroup
+        android:id="@+id/sendRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/constraint_textviiew_msg"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/editTextMessage"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RadioButton
+            android:id="@+id/rbtnSendPC"
+            android:layout_width="wrap_content"
+            android:drawableStart="@drawable/ic_baseline_computer_24"
+            android:layout_height="wrap_content"
+            android:text="@string/send_radio_pc" />
+
+        <RadioButton
+            android:id="@+id/rbtnSendAndroid"
+            android:drawableStart="@drawable/ic_baseline_phone_android_24"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/send_radio_android" />
+    </RadioGroup>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

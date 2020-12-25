@@ -1,42 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/SendLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/SendName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="名前"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@id/SendImg"
         app:layout_constraintTop_toTopOf="@id/SendImg"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        tools:layout_editor_absoluteX="176dp" />
+        tools:layout_editor_absoluteX="176dp"
+        tools:text="名前" />
 
     <TextView
         android:id="@+id/SendTimeDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Dec 17, 2020 2:25 AM"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/SendName" />
+        app:layout_constraintTop_toTopOf="@id/SendName"
+        tools:text="Dec 17, 2020 2:25 AM" />
 
 
     <TextView
         android:id="@+id/Sendmsg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="入力されたメッセージ"
-        android:textSize="20sp"
         android:layout_marginTop="10dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/SendName"
-        app:layout_constraintTop_toBottomOf="@+id/SendName" />
+        app:layout_constraintTop_toBottomOf="@+id/SendName"
+        tools:text="入力されたメッセージ" />
 
     <ImageView
         android:id="@+id/SendImg"
@@ -48,12 +49,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_launcher_background" />
 
-    <Spinner
-        android:id="@+id/sendspinner"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/sendtool"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/SendImg"
-        app:layout_constraintStart_toStartOf="@id/SendImg"
-        app:layout_constraintEnd_toEndOf="@id/SendTimeDate"/>
+        android:textSize="20sp"
+        android:paddingBottom="@dimen/cardview_compat_inset_shadow"
+        app:layout_constraintStart_toStartOf="@+id/SendName"
+        app:layout_constraintTop_toBottomOf="@+id/SendImg"
+        tools:text="PCから" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
