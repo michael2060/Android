@@ -12,4 +12,11 @@
     <string name="constraint_textviiew_msg">テキストを入力</string>
     <string name="send_radio_pc">PC</string>
     <string name="send_radio_android">PHONE</string>
+    <string name="intent">Intent</string>
+    <string name="title_activity_intent">IntentActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 </resources>

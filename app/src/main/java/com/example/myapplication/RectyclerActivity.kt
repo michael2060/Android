@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import jp.wasabeef.recyclerview.animators.FadeInAnimator
+
 import kotlinx.android.synthetic.main.activity_recyclerview.*
 import timber.log.Timber
 
@@ -30,7 +30,6 @@ class RectyclerActivity : AppCompatActivity() {
             setHasFixedSize(true)
             layoutManager = recycleviewManager
             adapter = recycleviewadpter
-            itemAnimator = FadeInAnimator()
         }
     }
 
@@ -43,11 +42,24 @@ class RectyclerActivity : AppCompatActivity() {
             TODO("Not yet implemented")
         }
 
-        override fun animateMove(holder: RecyclerView.ViewHolder?, fromX: Int, fromY: Int, toX: Int, toY: Int): Boolean {
+        override fun animateMove(
+            holder: RecyclerView.ViewHolder?,
+            fromX: Int,
+            fromY: Int,
+            toX: Int,
+            toY: Int
+        ): Boolean {
             TODO("Not yet implemented")
         }
 
-        override fun animateChange(oldHolder: RecyclerView.ViewHolder?, newHolder: RecyclerView.ViewHolder?, fromLeft: Int, fromTop: Int, toLeft: Int, toTop: Int): Boolean {
+        override fun animateChange(
+            oldHolder: RecyclerView.ViewHolder?,
+            newHolder: RecyclerView.ViewHolder?,
+            fromLeft: Int,
+            fromTop: Int,
+            toLeft: Int,
+            toTop: Int
+        ): Boolean {
             TODO("Not yet implemented")
         }
 
@@ -70,7 +82,7 @@ class RectyclerActivity : AppCompatActivity() {
     }
 
     class MyAdapter(private val myDataset: Array<String>) :
-            RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+        RecyclerView.Adapter<MyAdapter.ViewHolder>() {
 
         // Provide a reference to the views for each data item
         // Complex data items may need more than one view per item, and
@@ -89,7 +101,7 @@ class RectyclerActivity : AppCompatActivity() {
         override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
             // Create a new view, which defines the UI of the list item
             val view = LayoutInflater.from(viewGroup.context)
-                    .inflate(R.layout.item_recycleview, viewGroup, false)
+                .inflate(R.layout.item_recycleview, viewGroup, false)
 
             return ViewHolder(view)
         }
@@ -100,9 +112,9 @@ class RectyclerActivity : AppCompatActivity() {
             // contents of the view with that element
             viewHolder.textView.text = myDataset[position]
             viewHolder.textView.setOnClickListener(
-                    View.OnClickListener {
-                        Timber.d("クリックしました")
-                    }
+                View.OnClickListener {
+                    Timber.d("クリックしました")
+                }
 
             )
         }

@@ -61,7 +61,7 @@ class Constraint_Activity : AppCompatActivity() {
 
         }
         //Spinnerリストを作成
-        var spinnerlist = arrayOf("公開", "下書き")
+        val spinnerlist = arrayOf("公開", "下書き")
 
         spinnerAdapter = SpinnerAdapter(this, spinnerlist)
 
@@ -76,7 +76,7 @@ class Constraint_Activity : AppCompatActivity() {
 
         val info = Addsendinfo(name, datetime, message, sendtool, sendStatus)
         listviewadapter.add(info)
-        
+
         if (spinnerstatus == EnumSendStatus.OPEN) {
             val snackbar = Snackbar.make(btnSend, "公開しました。", Snackbar.LENGTH_INDEFINITE)
             snackbar.setAction("OK") {

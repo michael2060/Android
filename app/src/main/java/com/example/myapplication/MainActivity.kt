@@ -25,5 +25,9 @@ class MainActivity : AppCompatActivity() {
         btnSpinner.setOnClickListener {
             startActivity(Intent(this, SpinnerActivity::class.java))
         }
+        btnIntent.setOnClickListener {
+            startActivity(Intent(this, IntentActivity::class.java))
+        }
+    
     }
 }
