@@ -19,4 +19,12 @@
     values-round/strings.xml for round devices.
     -->
     <string name="hello_world">Hello Square World!</string>
+    <string name="Hwintent">宿題Intent</string>
+    <string name="line">Line</string>
+    <string name="template_email">Template Email</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="txt_mail_send_address">送り先</string>
+    <string name="txt_mail_text">内容</string>
+    <string name="txt_email_title">表題</string>
 </resources>

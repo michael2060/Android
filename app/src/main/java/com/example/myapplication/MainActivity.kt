@@ -28,6 +28,9 @@ class MainActivity : AppCompatActivity() {
         btnIntent.setOnClickListener {
             startActivity(Intent(this, IntentActivity::class.java))
         }
+        btnhwintent.setOnClickListener {
+            startActivity(Intent(this,HwIntentActivity::class.java))
+        }
     
     }
 }

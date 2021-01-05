@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-
+        <activity android:name=".HwIntentActivity"></activity>
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
@@ -21,9 +21,7 @@
 
         <activity
             android:name=".IntentActivity"
-            android:label="@string/title_activity_intent">
-
-        </activity>
+            android:label="@string/title_activity_intent"></activity>
         <activity android:name=".RectyclerActivity" />
         <activity android:name=".SpinnerActivity" />
         <activity
@@ -40,5 +38,12 @@
             </intent-filter>
         </activity>
     </application>
+    <queries>
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="https" />
+    </intent>
+    </queries>
 
 </manifest>
