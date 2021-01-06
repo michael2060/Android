@@ -29,8 +29,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, IntentActivity::class.java))
         }
         btnhwintent.setOnClickListener {
-            startActivity(Intent(this,HwIntentActivity::class.java))
+            startActivity(Intent(this, HwIntentActivity::class.java))
         }
-    
+        btnRoom.setOnClickListener {
+            startActivity(Intent(this, RoomActivity::class.java))
+        }
+
     }
 }

@@ -2,6 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+
+            <category android:name="android.intent.category.BROWSABLE" />
+
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
@@ -10,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".HwIntentActivity"></activity>
+        <activity android:name=".RoomActivity"></activity>
+        <activity android:name=".HwIntentActivity" />
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
@@ -21,7 +32,7 @@
 
         <activity
             android:name=".IntentActivity"
-            android:label="@string/title_activity_intent"></activity>
+            android:label="@string/title_activity_intent" />
         <activity android:name=".RectyclerActivity" />
         <activity android:name=".SpinnerActivity" />
         <activity
@@ -38,12 +49,5 @@
             </intent-filter>
         </activity>
     </application>
-    <queries>
-    <intent>
-        <action android:name="android.intent.action.VIEW" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <data android:scheme="https" />
-    </intent>
-    </queries>
 
 </manifest>
