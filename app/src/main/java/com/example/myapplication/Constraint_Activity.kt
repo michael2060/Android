@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_constraint_.*
 import kotlinx.android.synthetic.main.item_homework_sendinfo.view.*
+import kotlinx.coroutines.*
 import java.text.DateFormat
 import java.util.*
 
@@ -24,9 +25,14 @@ class Constraint_Activity : AppCompatActivity() {
     //spinner
     private lateinit var spinnerAdapter: SpinnerAdapter
 
-    //
+    //Enumクラス
     private lateinit var spinnerstatus: EnumSendStatus
     private lateinit var sendtool: EnumSendtool
+
+    //
+    private val job = Job()
+    private val coroutinScope = CoroutineScope(Dispatchers.Main + job)
+    private lateinit var db: UserDatabase
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,35 +77,50 @@ class Constraint_Activity : AppCompatActivity() {
     }
 
 
-    fun Sendbtnclick(name: String, datetime: String, message: String, sendtool: EnumSendtool, sendStatus: EnumSendStatus) {
+    fun Sendbtnclick(
+        name: String,
+        datetime: String,
+        message: String,
+        sendtool: EnumSendtool,
+        sendStatus: EnumSendStatus
+    ) {
 
 
-        val info = Addsendinfo(name, datetime, message, sendtool, sendStatus)
+        val info = Addsendinfo(0, name, datetime, message, sendtool, sendStatus)
+
         listviewadapter.add(info)
 
         if (spinnerstatus == EnumSendStatus.OPEN) {
             val snackbar = Snackbar.make(btnSend, "公開しました。", Snackbar.LENGTH_INDEFINITE)
             snackbar.setAction("OK") {
-
             }.show()
         }
         editTextMessage.text = null
+
+        coroutinScope.launch {
+            withContext(Dispatchers.IO) {
+                db.addsendinfoDao().insert(info)
+            }
+        }
+
     }
 
 
-    private class SendInfoAdapter(context: Context) : ArrayAdapter<Addsendinfo>(context, R.layout.item_homework_sendinfo) {
+    private class SendInfoAdapter(context: Context) :
+        ArrayAdapter<Addsendinfo>(context, R.layout.item_homework_sendinfo) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
             val view = convertView
-                    ?: LayoutInflater.from(context).inflate(R.layout.item_homework_sendinfo, parent, false)
+                ?: LayoutInflater.from(context)
+                    .inflate(R.layout.item_homework_sendinfo, parent, false)
 
             val item = getItem(position)
 
             view.Sendmsg.text = item?.sendMessage
             view.SendName.text = item?.name
-            view.SendTimeDate.text = item?.dateTime
-            view.sendtool.text = when (item?.sendtool) {
+            view.SendTimeDate.text = item?.sendTime
+            view.sendtool.text = when (item?.sendTool) {
                 EnumSendtool.PC -> "PCから"
                 EnumSendtool.Android -> "Androidから"
                 else -> ""
@@ -121,11 +142,13 @@ class Constraint_Activity : AppCompatActivity() {
 
     }
 
-    private class SpinnerAdapter(context: Context, list: Array<String>) : ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, list) {
+    private class SpinnerAdapter(context: Context, list: Array<String>) :
+        ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, list) {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val items = getItem(position)
             val view = convertView
-                    ?: LayoutInflater.from(context).inflate(android.R.layout.simple_spinner_item, parent, false)
+                ?: LayoutInflater.from(context)
+                    .inflate(android.R.layout.simple_spinner_item, parent, false)
             val item = view.findViewById<TextView>(android.R.id.text1)
             item.text = items
             return view
@@ -134,7 +157,8 @@ class Constraint_Activity : AppCompatActivity() {
         override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
             val items = getItem(position)
             val view = convertView
-                    ?: LayoutInflater.from(context).inflate(android.R.layout.simple_spinner_item, parent, false)
+                ?: LayoutInflater.from(context)
+                    .inflate(android.R.layout.simple_spinner_item, parent, false)
             val item = view.findViewById<TextView>(android.R.id.text1)
             item.text = items
             return view

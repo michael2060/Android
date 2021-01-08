@@ -4,9 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
 @Entity
-class Addsendinfo(
+data class HwMessage(
+
     @PrimaryKey(autoGenerate = true) val uid: Int,
 
     @ColumnInfo(name = "name") val name: String?,
@@ -18,5 +18,6 @@ class Addsendinfo(
     @ColumnInfo(name = "send_tool") val sendTool: EnumSendtool,
 
     @ColumnInfo(name = "send_status") val sendStatus: EnumSendStatus?
-) {
-}
+
+
+)
