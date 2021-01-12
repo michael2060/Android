@@ -15,8 +15,8 @@ class Addsendinfo(
 
     @ColumnInfo(name = "send_message") val sendMessage: String?,
 
-    @ColumnInfo(name = "send_tool") val sendTool: EnumSendtool,
+    @ColumnInfo(name = "send_tool") val sendTool: Int?,
 
-    @ColumnInfo(name = "send_status") val sendStatus: EnumSendStatus?
-) {
-}
+    @ColumnInfo(name = "send_status") val sendStatus: Int?
+
+)

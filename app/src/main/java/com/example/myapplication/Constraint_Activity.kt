@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_constraint_.*
+import kotlinx.android.synthetic.main.activity_linear_activiy.*
 import kotlinx.android.synthetic.main.item_homework_sendinfo.view.*
 import kotlinx.coroutines.*
 import java.text.DateFormat
@@ -34,12 +36,37 @@ class Constraint_Activity : AppCompatActivity() {
     private val coroutinScope = CoroutineScope(Dispatchers.Main + job)
     private lateinit var db: UserDatabase
 
+    private lateinit var msgs:List<Addsendinfo>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_constraint_)
         listviewadapter = SendInfoAdapter(this)
         ListViewSendInfo.adapter = listviewadapter
+        db = Room.databaseBuilder(this, UserDatabase::class.java, "SAMPLE_DB").build()
+
+        //データベースから取得
+        coroutinScope.launch(Dispatchers.Main){
+            withContext(Dispatchers.IO) {
+                msgs = db.addsendinfoDao().getAll()
+                }
+            //取得後メッセージを追加
+            for (msg: Addsendinfo in msgs) {
+                listviewadapter.add(msg)
+            }
+        }
+
+        ListViewSendInfo.setOnItemClickListener {
+                parent, view, position, id ->
+                coroutinScope.launch(Dispatchers.Main){
+                withContext(Dispatchers.IO) {
+                    //削除処理
+                    db.addsendinfoDao().deleteMsg(msgs.get(position).uid)
+                }
+                listviewadapter.remove(ListViewSendInfo.getItemAtPosition(position) as Addsendinfo?)
+            }
+        }
+
 
 
         btnSend.setOnClickListener {
@@ -86,7 +113,7 @@ class Constraint_Activity : AppCompatActivity() {
     ) {
 
 
-        val info = Addsendinfo(0, name, datetime, message, sendtool, sendStatus)
+        val info = Addsendinfo(0, name, datetime, message, sendtool.value, sendStatus.status)
 
         listviewadapter.add(info)
 
@@ -97,18 +124,18 @@ class Constraint_Activity : AppCompatActivity() {
         }
         editTextMessage.text = null
 
+        //データベースに追加
         coroutinScope.launch {
             withContext(Dispatchers.IO) {
                 db.addsendinfoDao().insert(info)
+                msgs=  db.addsendinfoDao().getAll()
             }
         }
-
     }
 
 
     private class SendInfoAdapter(context: Context) :
         ArrayAdapter<Addsendinfo>(context, R.layout.item_homework_sendinfo) {
-
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
             val view = convertView
@@ -121,15 +148,15 @@ class Constraint_Activity : AppCompatActivity() {
             view.SendName.text = item?.name
             view.SendTimeDate.text = item?.sendTime
             view.sendtool.text = when (item?.sendTool) {
-                EnumSendtool.PC -> "PCから"
-                EnumSendtool.Android -> "Androidから"
+                EnumSendtool.PC.value -> "PCから"
+                EnumSendtool.Android.value -> "Androidから"
                 else -> ""
             }
 
             val layoutcolor: Int
             when (item?.sendStatus) {
-                EnumSendStatus.DRAFT -> layoutcolor = Color.GRAY
-                EnumSendStatus.OPEN -> {
+                EnumSendStatus.DRAFT.status -> layoutcolor = Color.GRAY
+                EnumSendStatus.OPEN.status -> {
                     layoutcolor = Color.WHITE
                 }
                 else -> layoutcolor = Color.WHITE
@@ -138,8 +165,6 @@ class Constraint_Activity : AppCompatActivity() {
 
             return view
         }
-
-
     }
 
     private class SpinnerAdapter(context: Context, list: Array<String>) :
@@ -164,6 +189,4 @@ class Constraint_Activity : AppCompatActivity() {
             return view
         }
     }
-
-
 }
