@@ -34,6 +34,9 @@ class MainActivity : AppCompatActivity() {
         btnRoom.setOnClickListener {
             startActivity(Intent(this, RoomActivity::class.java))
         }
+        btnGson.setOnClickListener {
+            startActivity((Intent(this, GsonActivity::class.java)))
+        }
 
     }
 }

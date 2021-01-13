@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".RoomActivity"></activity>
+        <activity android:name=".GsonActivity"></activity>
+        <activity android:name=".RoomActivity" />
         <activity android:name=".HwIntentActivity" />
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
