@@ -1,8 +1,8 @@
 package com.example.myapplication
 
-import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.Hw.Addsendinfo
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_gson.*
 import timber.log.Timber
@@ -15,13 +15,20 @@ class GsonActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gson)
 
-        val addsendinfo = Addsendinfo(0, "michael", "2021/1/13", "おはようございます", 1, 1)
+        val addsendinfo = Addsendinfo(
+            0,
+            "michael",
+            "2021/1/13",
+            "おはようございます",
+            1,
+            1
+        )
 
         btnsavegson.setOnClickListener {
             val gson = GsonBuilder().create()
             val text = gson.toJson(addsendinfo)
             Timber.d(text)
-            openFileOutput("sample.Json", Context.MODE_PRIVATE)?.use {
+            openFileOutput("sample.Json", MODE_PRIVATE)?.use {
                 OutputStreamWriter(it, Charset.forName("UTF-8")).use { writer ->
                     writer.write(text)
                 }

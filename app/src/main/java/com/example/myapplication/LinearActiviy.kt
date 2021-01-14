@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.Hw.Addinfo
 import kotlinx.android.synthetic.main.activity_linear_activiy.*
 import kotlinx.android.synthetic.main.item_linearlayout.view.*
 
@@ -39,12 +40,12 @@ class LinearActiviy : AppCompatActivity() {
 
 
     private class PersonalInfoAdapter(context: Context) :
-            ArrayAdapter<Addinfo>(context, R.layout.item_linearlayout) {
+        ArrayAdapter<Addinfo>(context, R.layout.item_linearlayout) {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
             val view =
-                    convertView ?: LayoutInflater.from(context)
-                            .inflate(R.layout.item_linearlayout, parent, false)
+                convertView ?: LayoutInflater.from(context)
+                    .inflate(R.layout.item_linearlayout, parent, false)
 
             val item = getItem(position)
             view.nameid.text = item?.name

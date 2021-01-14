@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.Hw
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -11,9 +11,9 @@ class Addsendinfo(
 
     @ColumnInfo(name = "name") val name: String?,
 
-    @ColumnInfo(name = "send_time") val sendTime: String?,
+    @ColumnInfo(name = "send_time") var sendTime: String?,
 
-    @ColumnInfo(name = "send_message") val sendMessage: String?,
+    @ColumnInfo(name = "send_message") var sendMessage: String?,
 
     @ColumnInfo(name = "send_tool") val sendTool: Int?,
 

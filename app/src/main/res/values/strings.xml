@@ -27,4 +27,5 @@
     <string name="txt_mail_send_address">送り先</string>
     <string name="txt_mail_text">内容</string>
     <string name="txt_email_title">表題</string>
+    <string name="msg_update">更新</string>
 </resources>

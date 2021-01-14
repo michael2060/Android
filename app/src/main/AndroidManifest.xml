@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".GsonActivity"></activity>
+        <activity android:name=".Hw.HwEditActivity"></activity>
+        <activity android:name=".GsonActivity" />
         <activity android:name=".RoomActivity" />
         <activity android:name=".HwIntentActivity" />
         <!--
@@ -37,7 +38,7 @@
         <activity android:name=".RectyclerActivity" />
         <activity android:name=".SpinnerActivity" />
         <activity
-            android:name=".Constraint_Activity"
+            android:name=".Hw.Constraint_Activity"
             android:label="@string/Constraint_layout_label" />
         <activity
             android:name=".LinearActiviy"

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.Hw.Addinfo
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_spinner.*
 import timber.log.Timber
