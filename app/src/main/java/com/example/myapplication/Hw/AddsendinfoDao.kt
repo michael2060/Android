@@ -1,9 +1,6 @@
 package com.example.myapplication.Hw
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 
 @Dao
 interface AddsendinfoDao {
@@ -12,6 +9,9 @@ interface AddsendinfoDao {
 
     @Insert
     fun insert(addSendInfo: Addsendinfo)
+
+    @Update
+    fun update(addSendInfo: Addsendinfo)
 
     @Transaction
     @Query("DELETE FROM addsendinfo WHERE uid =(:msgId)")

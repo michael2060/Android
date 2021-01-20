@@ -101,7 +101,7 @@ class Constraint_Activity : AppCompatActivity() {
         val spinnerlist = arrayOf("公開", "下書き")
 
         spinnerAdapter =
-            SpinnerAdapter(this, spinnerlist)
+                SpinnerAdapter(this, spinnerlist)
 
         spinnersend.adapter = spinnerAdapter
 
@@ -117,9 +117,9 @@ class Constraint_Activity : AppCompatActivity() {
 
     //contextual menu
     override fun onCreateContextMenu(
-        menu: ContextMenu?,
-        v: View?,
-        menuInfo: ContextMenu.ContextMenuInfo?
+            menu: ContextMenu?,
+            v: View?,
+            menuInfo: ContextMenu.ContextMenuInfo?
     ) {
         super.onCreateContextMenu(menu, v, menuInfo)
         val inflater: MenuInflater = menuInflater
@@ -136,12 +136,13 @@ class Constraint_Activity : AppCompatActivity() {
             }
 
             R.id.Configure -> {
-                val extra = msgs.get(position)
+                val addsendinfo = msgs.get(position)
                 val editintent = Intent(this, HwEditActivity::class.java).apply {
-                    putExtra("uid", extra.uid)
-                    putExtra("position", position)
-                    putExtra("Name", extra.sendTime)
-                    putExtra("msg", extra.sendMessage)
+                    putExtra("uid", addsendinfo.uid)
+                    putExtra(HwEditActivity.POSITION, position)
+                    putExtra("Name", addsendinfo.sendTime)
+                    putExtra("msg", addsendinfo.sendMessage)
+                    putExtra(HwEditActivity.ADDSENDINFO, addsendinfo)
                 }
                 startActivityForResult(editintent, MSGEDIT_RESULT)
             }
@@ -155,11 +156,12 @@ class Constraint_Activity : AppCompatActivity() {
             MSGEDIT_RESULT ->
                 if (data != null) {
                     val uid = data.getIntExtra("uid", 0)
-                    val position = data.getIntExtra("position", 0)
+                    val position = data.getIntExtra(HwEditActivity.POSITION, 0)
                     val msg = data.getStringExtra("msg")
                     val time = data.getStringExtra("time")
+                    val addsendinfo = data.getParcelableExtra<Addsendinfo>(HwEditActivity.ADDSENDINFO)
 
-                    updmsg(uid, position, msg, time)
+                    updmsg(position, addsendinfo)
 
                 }
 
@@ -169,21 +171,21 @@ class Constraint_Activity : AppCompatActivity() {
 
 
     fun Sendbtnclick(
-        name: String,
-        datetime: String,
-        message: String,
-        sendtool: EnumSendtool,
-        sendStatus: EnumSendStatus
+            name: String,
+            datetime: String,
+            message: String,
+            sendtool: EnumSendtool,
+            sendStatus: EnumSendStatus
     ) {
 
 
         val info = Addsendinfo(
-            0,
-            name,
-            datetime,
-            message,
-            sendtool.value,
-            sendStatus.status
+                0,
+                name,
+                datetime,
+                message,
+                sendtool.value,
+                sendStatus.status
         )
 
         listviewadapter.add(info)
@@ -235,36 +237,38 @@ class Constraint_Activity : AppCompatActivity() {
         }
     }
 
-    private fun updmsg(uid: Int?, position: Int?, msg: String?, time: String?) {
+    private fun updmsg(position: Int?, addsendinfo: Addsendinfo?) {
         coroutinScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO) {
-                if (uid != null && msg != null && time != null) {
-                    db.addsendinfoDao().updMsg(uid, msg, time)
-                }
-                if (position != null) {
-                    val upd = listviewadapter.getItem(position)
-                    if (upd != null) {
-                        upd.sendTime = time
-                        upd.sendMessage = msg
+                if (addsendinfo != null)
+                    db.addsendinfoDao().update(addsendinfo)
+            }
+            if (position != null) {
+                val upd = listviewadapter.getItem(position)
+                if (upd != null) {
+                    if (addsendinfo != null) {
+                        upd.sendTime = addsendinfo.sendTime
+                        upd.sendMessage = addsendinfo.sendMessage
                     }
                 }
             }
             listviewadapter.notifyDataSetChanged()
         }
+
     }
 }
 
 
 private class SendInfoAdapter(context: Context) :
-    ArrayAdapter<Addsendinfo>(
-        context,
-        R.layout.item_homework_sendinfo
-    ) {
+        ArrayAdapter<Addsendinfo>(
+                context,
+                R.layout.item_homework_sendinfo
+        ) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
         val view = convertView
-            ?: LayoutInflater.from(context)
-                .inflate(R.layout.item_homework_sendinfo, parent, false)
+                ?: LayoutInflater.from(context)
+                        .inflate(R.layout.item_homework_sendinfo, parent, false)
 
         val item = getItem(position)
 
@@ -292,12 +296,12 @@ private class SendInfoAdapter(context: Context) :
 }
 
 private class SpinnerAdapter(context: Context, list: Array<String>) :
-    ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, list) {
+        ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, list) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val items = getItem(position)
         val view = convertView
-            ?: LayoutInflater.from(context)
-                .inflate(android.R.layout.simple_spinner_item, parent, false)
+                ?: LayoutInflater.from(context)
+                        .inflate(android.R.layout.simple_spinner_item, parent, false)
         val item = view.findViewById<TextView>(android.R.id.text1)
         item.text = items
         return view
@@ -306,8 +310,8 @@ private class SpinnerAdapter(context: Context, list: Array<String>) :
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         val items = getItem(position)
         val view = convertView
-            ?: LayoutInflater.from(context)
-                .inflate(android.R.layout.simple_spinner_item, parent, false)
+                ?: LayoutInflater.from(context)
+                        .inflate(android.R.layout.simple_spinner_item, parent, false)
         val item = view.findViewById<TextView>(android.R.id.text1)
         item.text = items
         return view
