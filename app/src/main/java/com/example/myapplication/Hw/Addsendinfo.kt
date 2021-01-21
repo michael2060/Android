@@ -1,11 +1,13 @@
 package com.example.myapplication.Hw
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
+import kotlinx.android.parcel.Parcelize
 
 @Entity
+@Parcelize
 class Addsendinfo(
     @PrimaryKey(autoGenerate = true) val uid: Int,
 
@@ -19,4 +21,4 @@ class Addsendinfo(
 
     @ColumnInfo(name = "send_status") val sendStatus: Int?
 
-)
+) : Parcelable
