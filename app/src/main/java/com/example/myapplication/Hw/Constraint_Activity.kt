@@ -4,7 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.*
+import android.view.ContextMenu
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
@@ -13,11 +19,24 @@ import androidx.room.Room
 import com.example.myapplication.R
 import com.example.myapplication.UserDatabase
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_constraint_.*
-import kotlinx.android.synthetic.main.item_homework_sendinfo.view.*
-import kotlinx.coroutines.*
+import kotlinx.android.synthetic.main.activity_constraint_.ListViewSendInfo
+import kotlinx.android.synthetic.main.activity_constraint_.btnSend
+import kotlinx.android.synthetic.main.activity_constraint_.editTextMessage
+import kotlinx.android.synthetic.main.activity_constraint_.rbtnSendAndroid
+import kotlinx.android.synthetic.main.activity_constraint_.rbtnSendPC
+import kotlinx.android.synthetic.main.activity_constraint_.spinnersend
+import kotlinx.android.synthetic.main.item_homework_sendinfo.view.SendLayout
+import kotlinx.android.synthetic.main.item_homework_sendinfo.view.SendName
+import kotlinx.android.synthetic.main.item_homework_sendinfo.view.SendTimeDate
+import kotlinx.android.synthetic.main.item_homework_sendinfo.view.Sendmsg
+import kotlinx.android.synthetic.main.item_homework_sendinfo.view.sendtool
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.DateFormat
-import java.util.*
+import java.util.Date
 
 class Constraint_Activity : AppCompatActivity() {
     //定数
@@ -40,13 +59,13 @@ class Constraint_Activity : AppCompatActivity() {
     private val coroutinScope = CoroutineScope(Dispatchers.Main + job)
     private lateinit var db: UserDatabase
 
-    private lateinit var msgs: List<Addsendinfo>
+    private val msgs = ArrayList<Addsendinfo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_constraint_)
         //arrayadapter代入
-        listviewadapter = SendInfoAdapter(this)
+        listviewadapter = SendInfoAdapter(this, msgs)
         //listviewアダプターをarrayadapter代入
         ListViewSendInfo.adapter = listviewadapter
         //contexualmenu
@@ -55,7 +74,7 @@ class Constraint_Activity : AppCompatActivity() {
         db = Room.databaseBuilder(this, UserDatabase::class.java, "SAMPLE_DB").build()
 
         //データベースから取得
-        getmsgs(true)
+        getmsgs()
         //アダプターにデータ追加
 
         /*ListViewSendInfo.setOnItemLongClickListener { parent, view, position, id ->
@@ -70,7 +89,6 @@ class Constraint_Activity : AppCompatActivity() {
 
             return@setOnItemLongClickListener true
         }*/
-
 
         //sendbtnclick event
         btnSend.setOnClickListener {
@@ -131,17 +149,13 @@ class Constraint_Activity : AppCompatActivity() {
         val position = index.position
         when (item.itemId) {
             R.id.delete -> {
-                deletemsg(position)
-                getmsgs(false)
+                deletemsg(msgs[position])
             }
 
             R.id.Configure -> {
-                val extra = msgs.get(position)
+                val sendInfo = msgs.get(position)
                 val editintent = Intent(this, HwEditActivity::class.java).apply {
-                    putExtra("uid", extra.uid)
-                    putExtra("position", position)
-                    putExtra("Name", extra.sendTime)
-                    putExtra("msg", extra.sendMessage)
+                    putExtra(HwEditActivity.KEY_SENDINFO, sendInfo)
                 }
                 startActivityForResult(editintent, MSGEDIT_RESULT)
             }
@@ -151,22 +165,20 @@ class Constraint_Activity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode != RESULT_OK) {
+            // 結果をチェックする
+            return
+        }
+
         when (requestCode) {
-            MSGEDIT_RESULT ->
-                if (data != null) {
-                    val uid = data.getIntExtra("uid", 0)
-                    val position = data.getIntExtra("position", 0)
-                    val msg = data.getStringExtra("msg")
-                    val time = data.getStringExtra("time")
-
-                    updmsg(uid, position, msg, time)
-
+            MSGEDIT_RESULT -> {
+                val sendInfo = data?.getParcelableExtra(HwEditActivity.KEY_SENDINFO) as? Addsendinfo
+                if (sendInfo != null) {
+                    updmsg(sendInfo)
                 }
-
-
+            }
         }
     }
-
 
     fun Sendbtnclick(
         name: String,
@@ -175,7 +187,6 @@ class Constraint_Activity : AppCompatActivity() {
         sendtool: EnumSendtool,
         sendStatus: EnumSendStatus
     ) {
-
 
         val info = Addsendinfo(
             0,
@@ -186,7 +197,8 @@ class Constraint_Activity : AppCompatActivity() {
             sendStatus.status
         )
 
-        listviewadapter.add(info)
+        msgs.add(info)
+        listviewadapter.notifyDataSetChanged()
 
         if (spinnerstatus == EnumSendStatus.OPEN) {
             val snackbar = Snackbar.make(btnSend, "公開しました。", Snackbar.LENGTH_INDEFINITE)
@@ -199,66 +211,50 @@ class Constraint_Activity : AppCompatActivity() {
         coroutinScope.launch {
             withContext(Dispatchers.IO) {
                 db.addsendinfoDao().insert(info)
-                msgs = db.addsendinfoDao().getAll()
             }
         }
     }
 
-    private fun getmsgs(addlistflg: Boolean) {
-        when (addlistflg) {
-            true -> {
-                coroutinScope.launch(Dispatchers.Main) {
-                    withContext(Dispatchers.IO) {
-                        msgs = db.addsendinfoDao().getAll()
-                    }
-                    listviewadapter.addAll(msgs)
-                }
-            }
-            false -> {
-                coroutinScope.launch(Dispatchers.Main) {
-                    withContext(Dispatchers.IO) {
-                        msgs = db.addsendinfoDao().getAll()
-                    }
-                }
-            }
-        }
-    }
-
-    private fun deletemsg(index: Int) {
+    private fun getmsgs() {
         coroutinScope.launch(Dispatchers.Main) {
+            msgs.clear()
+            withContext(Dispatchers.IO) {
+                msgs.addAll(db.addsendinfoDao().getAll())
+            }
+            listviewadapter.notifyDataSetChanged()
+        }
+    }
 
+    private fun deletemsg(sendInfo: Addsendinfo) {
+        coroutinScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO) {
                 //削除処理
-                db.addsendinfoDao().deleteMsg(msgs.get(index).uid)
+                db.addsendinfoDao().deleteMsg(sendInfo.uid)
             }
-            listviewadapter.remove(ListViewSendInfo.getItemAtPosition(index) as Addsendinfo?)
+            msgs.remove(sendInfo)
+            listviewadapter.notifyDataSetChanged()
         }
     }
 
-    private fun updmsg(uid: Int?, position: Int?, msg: String?, time: String?) {
+    private fun updmsg(sendInfo: Addsendinfo) {
         coroutinScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO) {
-                if (uid != null && msg != null && time != null) {
-                    db.addsendinfoDao().updMsg(uid, msg, time)
-                }
-                if (position != null) {
-                    val upd = listviewadapter.getItem(position)
-                    if (upd != null) {
-                        upd.sendTime = time
-                        upd.sendMessage = msg
-                    }
-                }
+                db.addsendinfoDao().update(sendInfo)
+            }
+            val index = msgs.indexOfFirst { it.uid == sendInfo.uid }
+            if (index != -1) {
+                msgs[index] = sendInfo
             }
             listviewadapter.notifyDataSetChanged()
         }
     }
 }
 
-
-private class SendInfoAdapter(context: Context) :
+private class SendInfoAdapter(context: Context, list: List<Addsendinfo>) :
     ArrayAdapter<Addsendinfo>(
         context,
-        R.layout.item_homework_sendinfo
+        R.layout.item_homework_sendinfo,
+        list
     ) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
