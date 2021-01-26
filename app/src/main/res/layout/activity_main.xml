@@ -75,5 +75,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnRoom" />
 
+    <Button
+        android:id="@+id/btnokhttp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="okhttp"
+        android:textColor="@color/black"
+        android:backgroundTint="@android:color/holo_blue_bright"
+        app:layout_constraintEnd_toEndOf="@+id/btnGson"
+        app:layout_constraintStart_toStartOf="@+id/btnGson"
+        app:layout_constraintTop_toBottomOf="@+id/btnGson" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

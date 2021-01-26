@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
@@ -20,7 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".Hw.HwEditActivity"></activity>
+        <activity android:name=".okhttphw.OkhttpActivity"></activity>
+        <activity android:name=".Hw.HwEditActivity" />
         <activity android:name=".GsonActivity" />
         <activity android:name=".RoomActivity" />
         <activity android:name=".HwIntentActivity" />

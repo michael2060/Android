@@ -254,7 +254,6 @@ class Constraint_Activity : AppCompatActivity() {
             }
             listviewadapter.notifyDataSetChanged()
         }
-
     }
 }
 
