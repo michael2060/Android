@@ -6,16 +6,23 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import com.google.gson.JsonParser
-import kotlinx.android.synthetic.main.activity_okhttp.*
-import kotlinx.coroutines.*
+import kotlinx.android.synthetic.main.activity_okhttp.btnweaterupdate
+import kotlinx.android.synthetic.main.activity_okhttp.imgweathericon
+import kotlinx.android.synthetic.main.activity_okhttp.txthumid
+import kotlinx.android.synthetic.main.activity_okhttp.txtplace
+import kotlinx.android.synthetic.main.activity_okhttp.txttemp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import java.net.URL
 
 class OkhttpActivity : AppCompatActivity() {
     companion object {
         private const val WEATHER_API_KEY = "c42bc6d679fc62dd60c6002b8bdfda59"
-        private const val WHEATHR_ICON_URI = "https://openweathermap.org/img/wn/04d@2x.png"
+        private const val WEATHER_ICON_URI = "https://openweathermap.org/img/wn/%s@2x.png"
     }
 
     private var iconuri: String = ""
@@ -48,8 +55,8 @@ class OkhttpActivity : AppCompatActivity() {
         //apiからデータ取得
         val city = "Nagoya"
         val request = Request.Builder()
-            .url("https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=ja&units=metric&appid=${WEATHER_API_KEY}")
-            .build()
+                .url("https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=ja&units=metric&appid=${WEATHER_API_KEY}")
+                .build()
         val json = withContext(Dispatchers.IO) {
             client.newCall(request).execute().body?.string()
         }
@@ -73,18 +80,30 @@ class OkhttpActivity : AppCompatActivity() {
         val name = json.get("name").asString
 
         //アイコン取得
-        withContext(Dispatchers.IO) {
-            iconuri = "04d"
-            bitmap =
-                BitmapFactory.decodeStream(URL(iconuri).openConnection().getInputStream())
-        }
+//        withContext(Dispatchers.IO) {
+//            iconuri = "04d"
+//            bitmap =
+//                    BitmapFactory.decodeStream(URL(iconuri).openConnection().getInputStream())
+//        }
 
         //UIを更新
-        imgweathericon.setImageBitmap(bitmap)
+        imgweathericon.setImageBitmap(loadIcon("04d"))
         txtplace.text = name.toString()
         txttemp.text = temp.toString()
         txthumid.text = humid.toString()
     }
 
-
+    // suspend functionは、非同期処理でも、戻り値としてデータを返せます
+    suspend fun loadIcon(icon: String): Bitmap {
+        val request = Request.Builder()
+                .url(WEATHER_ICON_URI.format(icon))
+                .build()
+        val bitmap = withContext(Dispatchers.IO) {
+            // Streamを使う時は、解放忘れを防止できます
+            client.newCall(request).execute().body?.byteStream().use {
+                BitmapFactory.decodeStream(it)
+            }
+        }
+        return bitmap
+    }
 }
