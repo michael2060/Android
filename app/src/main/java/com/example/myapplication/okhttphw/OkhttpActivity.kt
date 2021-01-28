@@ -6,18 +6,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import com.google.gson.JsonParser
-import kotlinx.android.synthetic.main.activity_okhttp.btnweaterupdate
-import kotlinx.android.synthetic.main.activity_okhttp.imgweathericon
-import kotlinx.android.synthetic.main.activity_okhttp.txthumid
-import kotlinx.android.synthetic.main.activity_okhttp.txtplace
-import kotlinx.android.synthetic.main.activity_okhttp.txttemp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.android.synthetic.main.activity_okhttp.*
+import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 
 class OkhttpActivity : AppCompatActivity() {
     companion object {
@@ -34,18 +29,23 @@ class OkhttpActivity : AppCompatActivity() {
     private val job = Job()
     private val coroutine = CoroutineScope(Dispatchers.Main + job)
 
-    private var bitmap: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_okhttp)
 
-        //更新処理
-        tempupdate()
 
         //更新イベント
         btnweaterupdate.setOnClickListener {
-            tempupdate()
+            coroutine.launch(Dispatchers.Main) {
+                val data = loadweather()
+                imgweathericon.setImageBitmap(loadIcon(data.weather?.get(0)?.icon.toString()))
+                txtplace.text = data.name
+                txttemp.text = data.main?.temp.toString()
+                txthumid.text = data.main?.humidity.toString()
+
+
+            }
         }
 
 
@@ -79,6 +79,9 @@ class OkhttpActivity : AppCompatActivity() {
         val humid = main.getAsJsonPrimitive("humidity").asLong
         val name = json.get("name").asString
 
+        val weather = json.getAsJsonArray("weather")
+        val icon = weather[0].asJsonObject.get("icon").asString
+
         //アイコン取得
 //        withContext(Dispatchers.IO) {
 //            iconuri = "04d"
@@ -87,7 +90,18 @@ class OkhttpActivity : AppCompatActivity() {
 //        }
 
         //UIを更新
-        imgweathericon.setImageBitmap(loadIcon("04d"))
+        val cachedir = cacheDir
+        val iconpath = cachedir.toString() + "\\${icon}.png"
+        val iconfile = File(cachedir, "\\${icon}.png")
+
+        val bitmap = if (iconfile.exists()) {
+            BitmapFactory.decodeFile(iconpath)
+        } else {
+            loadIcon(icon)
+        }
+
+
+        imgweathericon.setImageBitmap(bitmap)
         txtplace.text = name.toString()
         txttemp.text = temp.toString()
         txthumid.text = humid.toString()
@@ -104,6 +118,27 @@ class OkhttpActivity : AppCompatActivity() {
                 BitmapFactory.decodeStream(it)
             }
         }
+
+
+
         return bitmap
     }
+
+    private suspend fun loadweather(): OpenWeatherMapData {
+        return withContext(Dispatchers.IO) {
+            val retrservice = Retrofit.Builder()
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .baseUrl("https://api.openweathermap.org/")
+                    .build().create(OpenWeatherMapService::class.java)
+            retrservice.weather(
+                    WEATHER_API_KEY,
+                    "tokyo",
+                    "ja",
+                    "metric")
+
+        }
+
+    }
+
+
 }
