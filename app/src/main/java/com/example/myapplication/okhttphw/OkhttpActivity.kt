@@ -13,6 +13,7 @@ import okhttp3.Request
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
+import java.io.FileOutputStream
 
 class OkhttpActivity : AppCompatActivity() {
     companion object {
@@ -108,20 +109,30 @@ class OkhttpActivity : AppCompatActivity() {
     }
 
     // suspend functionは、非同期処理でも、戻り値としてデータを返せます
-    suspend fun loadIcon(icon: String): Bitmap {
-        val request = Request.Builder()
-                .url(WEATHER_ICON_URI.format(icon))
-                .build()
-        val bitmap = withContext(Dispatchers.IO) {
-            // Streamを使う時は、解放忘れを防止できます
-            client.newCall(request).execute().body?.byteStream().use {
-                BitmapFactory.decodeStream(it)
+    suspend fun loadIcon(icon: String): Bitmap? {
+        val file = File(cacheDir, icon + ".png")
+        val bitmap: Bitmap
+        if (file.exists()) {
+            bitmap = BitmapFactory.decodeFile(file.path)
+        } else {
+            val request = Request.Builder()
+                    .url(WEATHER_ICON_URI.format(icon))
+                    .build()
+            bitmap = withContext(Dispatchers.IO) {
+                // Streamを使う時は、解放忘れを防止できます
+                client.newCall(request).execute().body?.byteStream().use {
+                    BitmapFactory.decodeStream(it)
+                }
+            }
+            withContext(Dispatchers.IO) {
+                val cacheFile = File(cacheDir, icon + ".png")
+                cacheFile.createNewFile()
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(cacheFile))
+
             }
         }
-
-
-
         return bitmap
+
     }
 
     private suspend fun loadweather(): OpenWeatherMapData {
@@ -132,7 +143,7 @@ class OkhttpActivity : AppCompatActivity() {
                     .build().create(OpenWeatherMapService::class.java)
             retrservice.weather(
                     WEATHER_API_KEY,
-                    "tokyo",
+                    "singapore",
                     "ja",
                     "metric")
 
