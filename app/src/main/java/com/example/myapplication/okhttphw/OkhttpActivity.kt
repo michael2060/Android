@@ -6,19 +6,28 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import com.google.gson.JsonParser
-import kotlinx.android.synthetic.main.activity_okhttp.*
-import kotlinx.coroutines.*
+import kotlinx.android.synthetic.main.activity_okhttp.btnweaterupdate
+import kotlinx.android.synthetic.main.activity_okhttp.imgweathericon
+import kotlinx.android.synthetic.main.activity_okhttp.txthumid
+import kotlinx.android.synthetic.main.activity_okhttp.txtplace
+import kotlinx.android.synthetic.main.activity_okhttp.txttemp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 import java.io.File
-import java.io.FileOutputStream
 
 class OkhttpActivity : AppCompatActivity() {
     companion object {
         private const val WEATHER_API_KEY = "c42bc6d679fc62dd60c6002b8bdfda59"
         private const val WEATHER_ICON_URI = "https://openweathermap.org/img/wn/%s@2x.png"
+        private const val ICON_DIR = "icons"
     }
 
     private var iconuri: String = ""
@@ -110,29 +119,36 @@ class OkhttpActivity : AppCompatActivity() {
 
     // suspend functionは、非同期処理でも、戻り値としてデータを返せます
     suspend fun loadIcon(icon: String): Bitmap? {
-        val file = File(cacheDir, icon + ".png")
-        val bitmap: Bitmap
-        if (file.exists()) {
-            bitmap = BitmapFactory.decodeFile(file.path)
-        } else {
+        // アイコン名のような短いファイル名の場合、他のデータと被る可能性があるので、フォルダを分けておくと良いです
+        // 必須ではありません
+        // weather_icon_%s.png のようなファイル名にして被らないようにする方法もあります
+        val iconDir = File(cacheDir, ICON_DIR)
+        if (!iconDir.exists()) {
+            iconDir.mkdirs()
+        }
+
+        val fileName = "%s.png".format(icon)
+        val file = File(iconDir, fileName)
+
+        if (!file.exists()) {
+            Timber.d("icon download %s", icon)
             val request = Request.Builder()
-                    .url(WEATHER_ICON_URI.format(icon))
-                    .build()
-            bitmap = withContext(Dispatchers.IO) {
-                // Streamを使う時は、解放忘れを防止できます
-                client.newCall(request).execute().body?.byteStream().use {
-                    BitmapFactory.decodeStream(it)
+                .url(WEATHER_ICON_URI.format(icon))
+                .build()
+            withContext(Dispatchers.IO) {
+                // Streamを使う時は、useを使うことで、解放忘れを防止できます
+                client.newCall(request).execute().body?.byteStream()?.use { input ->
+                    // 色々な所でファイル名を直接書くと間違えやすいので、定義して使うようにします
+                    file.outputStream().use { output ->
+                        input.copyTo(output)
+                    }
                 }
             }
-            withContext(Dispatchers.IO) {
-                val cacheFile = File(cacheDir, icon + ".png")
-                cacheFile.createNewFile()
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(cacheFile))
-
-            }
         }
-        return bitmap
 
+        return withContext(Dispatchers.IO) {
+            BitmapFactory.decodeFile(file.path)
+        }
     }
 
     private suspend fun loadweather(): OpenWeatherMapData {
