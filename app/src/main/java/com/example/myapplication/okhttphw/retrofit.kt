@@ -21,7 +21,7 @@ class retrofit : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_retrofit)
         btnretrofitstart.setOnClickListener {
-            coroutine.launch(Dispatchers.Main) {
+            coroutine.launch {
                 val data = postTranslate("hi")
             }
         }
@@ -29,15 +29,13 @@ class retrofit : AppCompatActivity() {
 
     private suspend fun postTranslate(text: String): TranslateData {
         return withContext(Dispatchers.IO) {
-
-
             val mediaType = "application/json".toMediaTypeOrNull()
             val body: RequestBody = """[ {  "Text": "$text" }]""".toRequestBody(mediaType)
             val ret = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://microsoft-translator-text.p.rapidapi.com/")
+                .baseUrl("https://api.cognitive.microsofttranslator.com/")
                 .build().create(TranslatetorApi::class.java)
-            ret.translate()
+            ret.translate(body)
         }
     }
 }

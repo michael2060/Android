@@ -1,5 +1,7 @@
 package com.example.myapplication.okhttphw
 
+import okhttp3.RequestBody
+import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
@@ -10,6 +12,6 @@ interface TranslatetorApi {
         "content-type:application/json"
     )
     @POST("Text")
-    suspend fun translate(): TranslateData
+    suspend fun translate(@Body text: RequestBody): TranslateData
 
 }
