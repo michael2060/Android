@@ -6,16 +6,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import com.google.gson.JsonParser
-import kotlinx.android.synthetic.main.activity_okhttp.btnweaterupdate
-import kotlinx.android.synthetic.main.activity_okhttp.imgweathericon
-import kotlinx.android.synthetic.main.activity_okhttp.txthumid
-import kotlinx.android.synthetic.main.activity_okhttp.txtplace
-import kotlinx.android.synthetic.main.activity_okhttp.txttemp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.android.synthetic.main.activity_okhttp.*
+import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit
@@ -65,8 +57,8 @@ class OkhttpActivity : AppCompatActivity() {
         //apiからデータ取得
         val city = "Nagoya"
         val request = Request.Builder()
-                .url("https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=ja&units=metric&appid=${WEATHER_API_KEY}")
-                .build()
+            .url("https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=ja&units=metric&appid=${WEATHER_API_KEY}")
+            .build()
         val json = withContext(Dispatchers.IO) {
             client.newCall(request).execute().body?.string()
         }
@@ -154,14 +146,16 @@ class OkhttpActivity : AppCompatActivity() {
     private suspend fun loadweather(): OpenWeatherMapData {
         return withContext(Dispatchers.IO) {
             val retrservice = Retrofit.Builder()
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("https://api.openweathermap.org/")
-                    .build().create(OpenWeatherMapService::class.java)
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl("https://api.openweathermap.org/")
+                .build().create(OpenWeatherMapService::class.java);
+
             retrservice.weather(
-                    WEATHER_API_KEY,
-                    "singapore",
-                    "ja",
-                    "metric")
+                WEATHER_API_KEY,
+                "singapore",
+                "ja",
+                "metric"
+            )
 
         }
 

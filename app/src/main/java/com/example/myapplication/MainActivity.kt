@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.Hw.Constraint_Activity
-import com.example.myapplication.okhttphw.OkhttpActivity
+import com.example.myapplication.okhttphw.retrofit
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             startActivity((Intent(this, GsonActivity::class.java)))
         }
         btnokhttp.setOnClickListener {
-            startActivity((Intent(this, OkhttpActivity::class.java)))
+            startActivity((Intent(this, retrofit::class.java)))
         }
 
     }
