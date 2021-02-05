@@ -7,8 +7,6 @@ import kotlinx.android.synthetic.main.activity_retrofit.*
 import kotlinx.coroutines.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -29,12 +27,23 @@ class retrofit : AppCompatActivity() {
 
     private suspend fun postTranslate(text: String): TranslateData {
         return withContext(Dispatchers.IO) {
+
             val mediaType = "application/json".toMediaTypeOrNull()
-            val body: RequestBody = """[ {  "Text": "$text" }]""".toRequestBody(mediaType)
+            val body = """[ {  "Text": "$text" }]"""
+
+
             val ret = Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://api.cognitive.microsofttranslator.com/")
-                .build().create(TranslatetorApi::class.java)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .baseUrl("https://microsoft-translator-text.p.rapidapi.com/")
+                    .build().create(TranslatetorApi::class.java)
+            try {
+                ret.translate(body)
+            } catch (e: Exception) {
+
+            } finally {
+
+            }
+
             ret.translate(body)
         }
     }
