@@ -52,6 +52,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     //Kotlin coroutines用ライブラリ(async, await)
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     //Kotlin coroutines用ライブラリ(async, await)
     // Room
     def room_version = "2.2.5"

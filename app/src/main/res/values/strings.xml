@@ -28,4 +28,6 @@
     <string name="txt_mail_text">内容</string>
     <string name="txt_email_title">表題</string>
     <string name="msg_update">更新</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

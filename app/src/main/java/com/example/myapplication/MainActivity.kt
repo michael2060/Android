@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         btnokhttp.setOnClickListener {
             startActivity((Intent(this, retrofit::class.java)))
         }
-
+        btnfragment.setOnClickListener {
+            startActivity(Intent(this, FragnebtActivity::class.java))
+        }
     }
 }

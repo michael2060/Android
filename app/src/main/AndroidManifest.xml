@@ -25,7 +25,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".okhttphw.retrofit"></activity>
+        <activity android:name=".FragnebtActivity"></activity>
+        <activity android:name=".okhttphw.retrofit" />
         <activity android:name=".okhttphw.OkhttpActivity" />
         <activity android:name=".Hw.HwEditActivity" />
         <activity android:name=".GsonActivity" />
