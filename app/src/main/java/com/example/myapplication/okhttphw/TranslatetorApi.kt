@@ -9,4 +9,4 @@ interface TranslatetorApi {
     @POST("translate?from=en&profanityAction=NoAction&textType=plain&to=ja&api-version=3.0/")
     suspend fun translate(@Body text: String): TranslateData
 
-}
+}    suspend fun translate(@Body text: Map<String, String>): TranslateData

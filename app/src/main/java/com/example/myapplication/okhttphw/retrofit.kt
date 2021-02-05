@@ -31,6 +31,8 @@ class retrofit : AppCompatActivity() {
             val mediaType = "application/json".toMediaTypeOrNull()
             val body = """[ {  "Text": "$text" }]"""
 
+            //val body = """[{"Text":"$text"}]"""
+            val body = mapOf("Text" to text)
 
             val ret = Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
