@@ -3,13 +3,14 @@ package com.example.myapplication
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.Hw.Constraint_Activity
 import com.example.myapplication.okhttphw.retrofit
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SampleFragmentDialog.DialogResultListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -45,5 +46,20 @@ class MainActivity : AppCompatActivity() {
         btnfragment.setOnClickListener {
             startActivity(Intent(this, FragnebtActivity::class.java))
         }
+        btndialogshow.setOnClickListener {
+            val dialog = SampleFragmentDialog.makeDialog("保存しますか？")
+            supportFragmentManager
+                .beginTransaction()
+                .add(dialog, SampleFragmentDialog::class.java.simpleName)
+                .commit()
+        }
+    }
+
+    override fun onSave() {
+        Toast.makeText(this, "fragmentdialog", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onCancel() {
+        TODO("Not yet implemented")
     }
 }
