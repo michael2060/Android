@@ -3,8 +3,12 @@ package com.example.myapplication.okhttphw
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
-import kotlinx.android.synthetic.main.activity_retrofit.*
-import kotlinx.coroutines.*
+import kotlinx.android.synthetic.main.activity_retrofit.btnretrofitstart
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -29,23 +33,13 @@ class retrofit : AppCompatActivity() {
         return withContext(Dispatchers.IO) {
 
             val mediaType = "application/json".toMediaTypeOrNull()
-            val body = """[ {  "Text": "$text" }]"""
-
             //val body = """[{"Text":"$text"}]"""
-            val body = mapOf("Text" to text)
+            val body = listOf(mapOf("Text" to text))
 
             val ret = Retrofit.Builder()
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("https://microsoft-translator-text.p.rapidapi.com/")
-                    .build().create(TranslatetorApi::class.java)
-            try {
-                ret.translate(body)
-            } catch (e: Exception) {
-
-            } finally {
-
-            }
-
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl("https://microsoft-translator-text.p.rapidapi.com")
+                .build().create(TranslatetorApi::class.java)
             ret.translate(body)
         }
     }
