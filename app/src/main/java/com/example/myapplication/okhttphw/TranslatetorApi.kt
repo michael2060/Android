@@ -1,5 +1,6 @@
 package com.example.myapplication.okhttphw
 
+import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -11,6 +12,6 @@ interface TranslatetorApi {
         "content-type:application/json",
         "accept:application/json"
     )
-    @POST("/translate?from=en&profanityAction=NoAction&textType=plain&to=ja&api-version=3.0")
-    suspend fun translate(@Body text: @JvmSuppressWildcards List<Map<String, String>>): TranslateData
+    @POST("/translate?to=ja&api-version=3.0&profanityAction=NoAction&textType=plain")
+    suspend fun translate(@Body text: RequestBody): List<TranslateData>
 }
