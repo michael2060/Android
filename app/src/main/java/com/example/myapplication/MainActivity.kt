@@ -53,6 +53,9 @@ class MainActivity : AppCompatActivity(), SampleFragmentDialog.DialogResultListe
                 .add(dialog, SampleFragmentDialog::class.java.simpleName)
                 .commit()
         }
+        btntablayout.setOnClickListener {
+            startActivity(Intent(this, TabLayoutActivity::class.java))
+        }
     }
 
     override fun onSave() {
@@ -60,6 +63,6 @@ class MainActivity : AppCompatActivity(), SampleFragmentDialog.DialogResultListe
     }
 
     override fun onCancel() {
-        TODO("Not yet implemented")
+
     }
 }

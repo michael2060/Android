@@ -58,6 +58,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".TabLayoutActivity"
+            android:label="tab">
+
+        </activity>
     </application>
 
 </manifest>

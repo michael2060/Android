@@ -12,30 +12,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btnhomework"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="30dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnLinearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/linear_layout_label"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnHomework"
-        android:layout_marginTop="30dp" />
+        app:layout_constraintStart_toStartOf="@+id/btnHomework"
+        app:layout_constraintTop_toBottomOf="@+id/btnHomework" />
 
     <Button
         android:id="@+id/btnSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Spinner"
-        app:layout_constraintTop_toBottomOf="@id/btnLinearLayout"
         android:layout_marginTop="10dp"
+        android:text="Spinner"
         app:layout_constraintLeft_toLeftOf="@id/btnLinearLayout"
-        app:layout_constraintRight_toRightOf="@id/btnLinearLayout" />
+        app:layout_constraintRight_toRightOf="@id/btnLinearLayout"
+        app:layout_constraintStart_toStartOf="@+id/btnLinearLayout"
+        app:layout_constraintTop_toBottomOf="@id/btnLinearLayout" />
 
     <Button
         android:id="@+id/btnIntent"
@@ -43,9 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/intent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btnSpinner"
         app:layout_constraintTop_toBottomOf="@+id/btnSpinner" />
 
     <Button
@@ -53,8 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Hwintent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btnIntent"
         app:layout_constraintTop_toBottomOf="@+id/btnIntent" />
 
     <Button
@@ -62,7 +56,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Room"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnhwintent" />
 
@@ -71,7 +64,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Gson"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnRoom" />
 
@@ -79,10 +71,11 @@
         android:id="@+id/btnokhttp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="okhttp"
-        android:textColor="@color/black"
         android:backgroundTint="@android:color/holo_blue_bright"
+        android:text="okhttp/Retrofit"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/btnGson"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/btnGson"
         app:layout_constraintTop_toBottomOf="@+id/btnGson" />
 
@@ -90,8 +83,7 @@
         android:id="@+id/btnfragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Fragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnokhttp" />
 
@@ -99,10 +91,17 @@
         android:id="@+id/btndialogshow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="ダイアログ表示"
+        app:layout_constraintStart_toStartOf="@+id/btnfragment"
         app:layout_constraintTop_toBottomOf="@+id/btnfragment" />
+
+    <Button
+        android:id="@+id/btntablayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tablayout+pageviewer2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btndialogshow" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
